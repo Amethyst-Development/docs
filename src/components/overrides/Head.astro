@@ -1,0 +1,58 @@
+---
+import config from "virtual:starlight/user-config";
+import poppins400Woff2 from "@fontsource/poppins/files/poppins-latin-400-normal.woff2?url";
+import poppins500Woff2 from "@fontsource/poppins/files/poppins-latin-500-normal.woff2?url";
+import jetbrainsMono400Woff2 from "@fontsource/jetbrains-mono/files/jetbrains-mono-latin-400-normal.woff2?url";
+import jetbrainsMono600Woff2 from "@fontsource/jetbrains-mono/files/jetbrains-mono-latin-600-normal.woff2?url";
+
+const { entry, lang, siteTitle } = Astro.locals.starlightRoute;
+const { data } = entry;
+
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefined;
+const description = data.description || config.description;
+
+const stripTrailingSlash = (href: string) => {
+  if (href[href.length - 1] === "/") {
+    href = href.slice(0, -1);
+  }
+  return href;
+};
+const stripLeadingSlash = (href: string) => {
+  if (href[0] === "/") {
+    href = href.slice(1);
+  }
+  return href;
+};
+const fileWithBase = (path: string) => {
+  path = stripLeadingSlash(path);
+  return path ? base + "/" + path : base;
+};
+
+const base = stripTrailingSlash(import.meta.env.BASE_URL);
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{data.title} {config.titleDelimiter} {siteTitle}</title>
+<meta name="description" content={description} />
+{canonical && <link rel="canonical" href={canonical.href} />}
+<meta property="generator" content={Astro.generator} />
+<link rel="sitemap" href={fileWithBase("/sitemap-index.xml")} />
+
+<link rel="shortcut icon" type="image/svg+xml" href={fileWithBase("/favicon.svg")} />
+<link rel="icon" type="image/svg+xml" href={fileWithBase("/favicon.svg")} />
+
+<meta property="og:title" content={`${data.title} ${config.titleDelimiter} ${siteTitle}`} />
+<meta property="og:type" content="article" />
+{canonical && <meta property="og:url" content={canonical.href} />}
+<meta property="og:locale" content={lang} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={fileWithBase("/favicon.svg")} />
+<meta name="twitter:image" content={fileWithBase("/favicon.svg")} />
+
+<link rel="preload" as="font" type="font/woff2" href={poppins400Woff2} crossorigin="anonymous" />
+<link rel="preload" as="font" type="font/woff2" href={poppins500Woff2} crossorigin="anonymous" />
+<link rel="preload" as="font" type="font/woff2" href={jetbrainsMono400Woff2} crossorigin="anonymous" />
+<link rel="preload" as="font" type="font/woff2" href={jetbrainsMono600Woff2} crossorigin="anonymous" />
+
+<!-- Analytics can be added here if needed -->
