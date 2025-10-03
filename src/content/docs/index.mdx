@@ -6,27 +6,24 @@ hero:
   tagline: Documentation for all projects under the Amethyst Development umbrella
   image:
     file: ../../assets/amethyst-logo.svg
-  actions:
-    - text: Get Started
-      link: /dev/development/
-      icon: right-arrow
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
+import { CardGrid } from '@astrojs/starlight/components';
+import LinkCard from "/src/components/LinkCard.astro";
 
 ## Features
 
 <CardGrid>
-	<Card title="Update content" icon="pencil">
+	<LinkCard title="Update content" href="/" icon="pencil">
 		Edit `src/content/docs/index.mdx` to see this page change.
-	</Card>
-	<Card title="Add new content" icon="add-document">
+	</LinkCard>
+	<LinkCard title="Add new content" href="/" icon="add-document">
 		Add Markdown or MDX files to `src/content/docs` to create new pages.
-	</Card>
-	<Card title="Configure your site" icon="setting">
+	</LinkCard>
+	<LinkCard title="Configure your site" href="/" icon="setting">
 		Edit your `sidebar` and other config in `astro.config.mjs`.
-	</Card>
-	<Card title="Read the docs" icon="open-book">
-		Learn more in [the Starlight Docs](https://starlight.astro.build/).
-	</Card>
+	</LinkCard>
+	<LinkCard title="Read the docs" href="/" icon="open-book">
+		Learn more in the Starlight Docs
+	</LinkCard>
 </CardGrid>
